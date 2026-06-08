@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高校选课管理系统 - 选课处理工具</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: "Microsoft YaHei", -apple-system, "Segoe UI", sans-serif;
+            margin: 0; background: #f3f5f9; color: #2b3445;
+        }
+        header {
+            background: #2c5cc5; color: #fff; padding: 18px 28px;
+        }
+        header h1 { margin: 0; font-size: 20px; }
+        header p { margin: 6px 0 0; font-size: 13px; opacity: .85; }
+        .container { max-width: 980px; margin: 22px auto; padding: 0 16px; }
+        .card {
+            background: #fff; border-radius: 10px; padding: 20px;
+            box-shadow: 0 1px 4px rgba(0,0,0,.08); margin-bottom: 20px;
+        }
+        .card h2 { margin: 0 0 12px; font-size: 16px; color: #2c5cc5; }
+        textarea {
+            width: 100%; height: 130px; padding: 10px; font-size: 13px;
+            border: 1px solid #cdd5e0; border-radius: 6px; resize: vertical;
+            font-family: Consolas, Menlo, monospace;
+        }
+        .hint { font-size: 12px; color: #8a94a6; margin: 6px 0 10px; }
+        button {
+            background: #2c5cc5; color: #fff; border: none; padding: 9px 18px;
+            border-radius: 6px; cursor: pointer; font-size: 14px;
+        }
+        button:hover { background: #234aa0; }
+        button.ghost { background: #eef2fb; color: #2c5cc5; }
+        input[type=text] {
+            padding: 9px 12px; border: 1px solid #cdd5e0; border-radius: 6px;
+            font-size: 14px; width: 280px;
+        }
+        .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+        table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+        th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #eef0f4; font-size: 13px; }
+        th { background: #f7f9fc; color: #5b6678; }
+        .badge {
+            display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: 12px;
+        }
+        .t-公共课 { background: #e6f4ff; color: #1677ff; }
+        .t-专业课 { background: #fff1e6; color: #d4690a; }
+        .t-选修课 { background: #e9f7ec; color: #1a9c4a; }
+        .msg { margin: 10px 0; font-size: 13px; padding: 8px 12px; border-radius: 6px; }
+        .msg.ok { background: #e9f7ec; color: #1a7a3a; }
+        .msg.warn { background: #fff4e5; color: #b35f00; }
+        .group-title { margin: 16px 0 4px; font-size: 14px; font-weight: 600; }
+        .empty { color: #98a2b3; font-size: 13px; padding: 8px 0; }
+    </style>
+</head>
+<body>
+<header>
+    <h1>高校选课管理系统 · 学生选课处理工具</h1>
+    <p>SpringBoot 3.x · 去重 / 排序 / 分类 / 检索 · CSV 批量导入</p>
+</header>
+
+<div class="container">
+
+    <!-- ① 数据批量导入 -->
+    <div class="card">
+        <h2>① CSV 批量导入</h2>
+        <div class="hint">
+            每行一条，格式：<code>学生ID,课程ID,课程名称,课程类型</code>
+            （课程类型可省略，省略时按课程名称自动识别）。例如：<br>
+            <code>S000010,C000007,操作系统,专业课</code>
+        </div>
+        <textarea id="csvInput" placeholder="S000010,C000007,操作系统,专业课
+S000011,C000004,大学英语,公共课
+S000010,C000007,操作系统,专业课"></textarea>
+        <div class="row" style="margin-top:10px;">
+            <button onclick="doImport()">导入并处理</button>
+            <button class="ghost" onclick="fillSample()">填入示例</button>
+        </div>
+        <div id="importMsg"></div>
+    </div>
+
+    <!-- 选课检索 -->
+    <div class="card">
+        <h2>② 选课检索</h2>
+        <div class="hint">支持按 学生ID / 课程ID / 课程名称 / 课程类型 关键词模糊检索。</div>
+        <div class="row">
+            <input type="text" id="searchInput" placeholder="输入关键词，如：专业课 / Java / S000001">
+            <button onclick="doSearch()">检索</button>
+            <button class="ghost" onclick="loadGrouped()">显示全部</button>
+        </div>
+        <div id="searchMsg"></div>
+    </div>
+
+    <!-- ③ 数据展示 -->
+    <div class="card">
+        <h2>③ 选课数据展示（按课程类型分类）</h2>
+        <div id="dataArea"></div>
+    </div>
+
+</div>
+
+<script>
+    const API = '/api/enrollments';
+
+    function badge(type) {
+        return `<span class="badge t-${type}">${type}</span>`;
+    }
+
+    function renderTable(records) {
+        if (!records || records.length === 0) {
+            return '<div class="empty">（无记录）</div>';
+        }
+        let rows = records.map(r => `
+            <tr>
+                <td>${r.studentId}</td>
+                <td>${r.courseId}</td>
+                <td>${r.courseName}</td>
+                <td>${badge(r.courseType)}</td>
+            </tr>`).join('');
+        return `<table>
+            <thead><tr><th>学生ID</th><th>课程ID</th><th>课程名称</th><th>课程类型</th></tr></thead>
+            <tbody>${rows}</tbody></table>`;
+    }
+
+    function renderGrouped(grouped) {
+        let html = '';
+        for (const [type, list] of Object.entries(grouped)) {
+            html += `<div class="group-title">${badge(type)} ${type}（${list.length}）</div>`;
+            html += renderTable(list);
+        }
+        document.getElementById('dataArea').innerHTML = html;
+    }
+
+    async function loadGrouped() {
+        document.getElementById('searchMsg').innerHTML = '';
+        const res = await fetch(`${API}/grouped`);
+        renderGrouped(await res.json());
+    }
+
+    async function doImport() {
+        const csv = document.getElementById('csvInput').value;
+        const res = await fetch(`${API}/import`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ csv })
+        });
+        const data = await res.json();
+        document.getElementById('importMsg').innerHTML =
+            `<div class="msg ok">导入完成：有效 ${data.parsedCount} 行，新增 ${data.addedCount} 条，
+             去重移除 ${data.duplicateCount} 条，非法跳过 ${data.invalidCount} 行。</div>`;
+        renderGrouped(data.groupedByType);
+    }
+
+    async function doSearch() {
+        const keyword = document.getElementById('searchInput').value;
+        const res = await fetch(`${API}/search?keyword=${encodeURIComponent(keyword)}`);
+        const data = await res.json();
+        const cls = data.count === 0 ? 'warn' : 'ok';
+        document.getElementById('searchMsg').innerHTML =
+            `<div class="msg ${cls}">${data.message}</div>`;
+        document.getElementById('dataArea').innerHTML =
+            `<div class="group-title">检索结果</div>` + renderTable(data.records);
+    }
+
+    function fillSample() {
+        document.getElementById('csvInput').value =
+            `S000010,C000007,操作系统,专业课
+S000011,C000004,大学英语
+S000010,C000007,操作系统,专业课
+S000012,C000008,音乐鉴赏,选修课`;
+    }
+
+    // 页面加载即展示后台样例数据
+    loadGrouped();
+</script>
+</body>
+</html>

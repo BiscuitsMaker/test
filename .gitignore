@@ -1,0 +1,21 @@
+# Java
+*.class
+part1-basic-tool/out/
+
+# Maven
+target/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# misc
+*.log
+.DS_Store
+
+# 不提交本地工具配置
+.claude/
