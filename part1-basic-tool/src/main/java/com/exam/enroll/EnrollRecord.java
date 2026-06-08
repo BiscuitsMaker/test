@@ -1,7 +1,5 @@
 package com.exam.enroll;
 
-import java.util.Objects;
-
 /**
  * 选课记录实体类
  */
@@ -53,28 +51,6 @@ public class EnrollRecord {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
-    }
-
-    /**
-     * 去重判定依据：学生ID + 课程ID 完全一致即视为重复（与课程名称无关）。
-     * 重写 equals/hashCode 使其可直接用于基于 Set 的去重。
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        EnrollRecord that = (EnrollRecord) o;
-        return Objects.equals(studentId, that.studentId)
-                && Objects.equals(courseId, that.courseId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(studentId, courseId);
     }
 
     /**

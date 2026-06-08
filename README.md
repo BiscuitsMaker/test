@@ -23,6 +23,15 @@ cd part1-basic-tool && javac -encoding UTF-8 -d out $(find src -name "*.java") \
 cd part3-springboot && mvn spring-boot:run
 ```
 
+## 测试
+完整测试方案与报告见 [`tests/`](./tests)：
+```bash
+bash tests/run_tests.sh      # 步骤1-6 自动化，输出每个监测节点 PASS/FAIL，日志写入 tests/logs/
+```
+- 测试方案：[tests/TEST_PLAN.md](./tests/TEST_PLAN.md)
+- 测试报告：[tests/TEST_REPORT.md](./tests/TEST_REPORT.md)（**28 个节点全部通过**）
+- 运行日志：`tests/logs/`；界面截图：`screenshots/`
+
 ## 说明
 - 第三题按要求注明了所用 **AI 编程工具（Claude）**、**完整提示词**，以及 **AI 生成 / 自己修改优化** 的逐项标注，详见 [part3-springboot/README.md](./part3-springboot/README.md)。
 - 各题去重规则统一：**学生ID + 课程ID 相同即为重复**（与课程名称无关）；排序统一：**学生ID 升序，相同再按课程ID 升序**。

@@ -2,8 +2,9 @@ package com.exam.enroll;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.LinkedHashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 选课记录处理工具：去重、排序、输出。
@@ -28,16 +29,21 @@ public class EnrollProcessor {
             return new ArrayList<>();
         }
 
-        // 1. 去重：依赖 EnrollRecord 重写的 equals/hashCode（studentId + courseId）。
-        //    使用 LinkedHashSet 保留首次出现顺序（保留首条重复记录的课程名称）。
-        List<EnrollRecord> distinct = new ArrayList<>(new LinkedHashSet<>(input));
+        // 1. 去重：以"学生ID|课程ID"为键，与课程名称无关。
+        //    LinkedHashMap 保留首次出现的记录。
+        Map<String, EnrollRecord> distinct = new LinkedHashMap<>();
+        for (EnrollRecord record : input) {
+            String key = record.getStudentId() + "|" + record.getCourseId();
+            distinct.putIfAbsent(key, record);
+        }
 
         // 2. 排序：先按学生ID升序，再按课程ID升序。
-        distinct.sort(
+        List<EnrollRecord> result = new ArrayList<>(distinct.values());
+        result.sort(
                 Comparator.comparing(EnrollRecord::getStudentId)
                         .thenComparing(EnrollRecord::getCourseId));
 
-        return distinct;
+        return result;
     }
 
     /**

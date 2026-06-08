@@ -1,0 +1,23 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2026-06-08T09:30:29.375+08:00  INFO 421119 --- [enroll-system] [           main] com.exam.enroll.EnrollApplication        : Starting EnrollApplication v1.0.0 using Java 21.0.11 with PID 421119 (/root/Chensx/test/part3-springboot/target/enroll-system-1.0.0.jar started by root in /root/Chensx/test)
+2026-06-08T09:30:29.377+08:00  INFO 421119 --- [enroll-system] [           main] com.exam.enroll.EnrollApplication        : No active profile set, falling back to 1 default profile: "default"
+2026-06-08T09:30:30.201+08:00  INFO 421119 --- [enroll-system] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-06-08T09:30:30.215+08:00  INFO 421119 --- [enroll-system] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-08T09:30:30.215+08:00  INFO 421119 --- [enroll-system] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
+2026-06-08T09:30:30.256+08:00  INFO 421119 --- [enroll-system] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-06-08T09:30:30.257+08:00  INFO 421119 --- [enroll-system] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 828 ms
+2026-06-08T09:30:30.347+08:00  INFO 421119 --- [enroll-system] [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2026-06-08T09:30:30.624+08:00  INFO 421119 --- [enroll-system] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-06-08T09:30:30.641+08:00  INFO 421119 --- [enroll-system] [           main] com.exam.enroll.EnrollApplication        : Started EnrollApplication in 1.611 seconds (process running for 1.997)
+2026-06-08T09:30:30.718+08:00  INFO 421119 --- [enroll-system] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-08T09:30:30.719+08:00  INFO 421119 --- [enroll-system] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-08T09:30:30.719+08:00  INFO 421119 --- [enroll-system] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms

@@ -14,8 +14,9 @@ target/
 .project
 
 # misc
-*.log
 .DS_Store
 
 # 不提交本地工具配置
 .claude/
+
+# 说明：测试日志（tests/logs/*.log）与界面截图（screenshots/）需要上传，故不忽略。

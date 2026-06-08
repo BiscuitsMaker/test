@@ -1,0 +1,10 @@
+6.1 grouped 各类型数量: {'公共课': 2, '专业课': 3, '选修课': 1}
+6.2 import 结果: {'parsedCount': 2, 'addedCount': 1, 'duplicateCount': 1, 'invalidCount': 0}
+6.3 自动识别记录: {'studentId': 'S882230', 'courseId': 'C900002', 'courseName': '大学英语', 'courseType': '公共课'}
+6.4 手动标注记录: {'studentId': 'S882230', 'courseId': 'C900003', 'courseName': '数据结构', 'courseType': '专业课'}
+6.5 records 是否有序: True  共 9 条
+6.6 检索'专业课': 共匹配到 5 条记录
+6.7 四字段检索命中数: {'学生ID(S000001)': 2, '课程ID(C000001)': 2, '课程名称(Java)': 2, '课程类型(公共课)': 3}
+6.8 无匹配返回: 无匹配选课记录
+6.9 批量600导入: {'parsedCount': 600, 'addedCount': 600, 'duplicateCount': 0, 'invalidCount': 0}
+6.10 当前总记录数=1609, 检索耗时=5.7ms

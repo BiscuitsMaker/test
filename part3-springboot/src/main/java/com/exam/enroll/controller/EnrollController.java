@@ -38,12 +38,6 @@ public class EnrollController {
         return enrollService.importCsv(request.getCsv());
     }
 
-    /** 查询全量（去重 + 排序）记录。 */
-    @GetMapping
-    public List<EnrollRecord> findAll() {
-        return enrollService.findAll();
-    }
-
     /** 按课程类型分组展示。 */
     @GetMapping("/grouped")
     public Map<String, List<EnrollRecord>> grouped() {

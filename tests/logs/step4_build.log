@@ -1,0 +1,34 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< com.exam:enroll-system >-----------------------
+[INFO] Building enroll-system 1.0.0
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:resources (default-resources) @ enroll-system ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:compile (default-compile) @ enroll-system ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- maven-resources-plugin:3.3.1:testResources (default-testResources) @ enroll-system ---
+[INFO] skip non existing resourceDirectory /root/Chensx/test/part3-springboot/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.13.0:testCompile (default-testCompile) @ enroll-system ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ enroll-system ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- maven-jar-plugin:3.4.2:jar (default-jar) @ enroll-system ---
+[INFO] Building jar: /root/Chensx/test/part3-springboot/target/enroll-system-1.0.0.jar
+[INFO] 
+[INFO] --- spring-boot-maven-plugin:3.3.5:repackage (repackage) @ enroll-system ---
+[INFO] Replacing main artifact /root/Chensx/test/part3-springboot/target/enroll-system-1.0.0.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to /root/Chensx/test/part3-springboot/target/enroll-system-1.0.0.jar.original
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.549 s
+[INFO] Finished at: 2026-06-08T09:30:28+08:00
+[INFO] ------------------------------------------------------------------------
